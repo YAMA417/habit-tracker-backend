@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 public class Habit {
-    // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
