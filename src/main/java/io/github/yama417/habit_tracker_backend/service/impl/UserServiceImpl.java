@@ -1,6 +1,9 @@
 package io.github.yama417.habit_tracker_backend.service.impl;
 
+import io.github.yama417.habit_tracker_backend.dto.UsersRequestDTO;
+import io.github.yama417.habit_tracker_backend.dto.UsersResponseDTO;
 import io.github.yama417.habit_tracker_backend.entity.Users;
+import io.github.yama417.habit_tracker_backend.mapper.UsersMapper;
 import io.github.yama417.habit_tracker_backend.repository.UserRepository;
 import io.github.yama417.habit_tracker_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +22,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users createUser(Users user) {
-        return usersRepository.save(user);
+    public UsersResponseDTO createUser(UsersRequestDTO dto) {
+        Users user = UsersMapper.toEntity(dto);
+        Users saved = usersRepository.save(user);
+        return UsersMapper.toDTO(saved);
     }
 
     @Override

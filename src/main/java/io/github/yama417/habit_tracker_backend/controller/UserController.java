@@ -1,8 +1,12 @@
 package io.github.yama417.habit_tracker_backend.controller;
 
+import io.github.yama417.habit_tracker_backend.dto.UsersRequestDTO;
+import io.github.yama417.habit_tracker_backend.dto.UsersResponseDTO;
 import io.github.yama417.habit_tracker_backend.entity.Users;
 import io.github.yama417.habit_tracker_backend.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +25,9 @@ public class UserController {
     }
 
     @PostMapping
-    public Users createUser(@RequestBody Users user) {
-        return userService.createUser(user);
+    public ResponseEntity<UsersResponseDTO> createUser(@Valid @RequestBody UsersRequestDTO dto) {
+        UsersResponseDTO response = userService.createUser(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
