@@ -1,6 +1,11 @@
 package io.github.yama417.habit_tracker_backend.service.impl;
 
+import io.github.yama417.habit_tracker_backend.dto.HabitRequestDTO;
+import io.github.yama417.habit_tracker_backend.dto.HabitResponseDTO;
 import io.github.yama417.habit_tracker_backend.entity.Habit;
+import io.github.yama417.habit_tracker_backend.entity.Users;
+import io.github.yama417.habit_tracker_backend.mapper.HabitMapper;
+import io.github.yama417.habit_tracker_backend.mapper.UsersMapper;
 import io.github.yama417.habit_tracker_backend.repository.HabitRepository;
 import io.github.yama417.habit_tracker_backend.service.HabitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +24,15 @@ public class HabitServiceImpl implements HabitService {
     }
 
     @Override
-    public Habit createHabit(Habit habit) {
-        return habitRepository.save(habit);
+    public HabitResponseDTO createHabit(HabitRequestDTO habitDto) {
+        Habit habit = HabitMapper.toEntity(habitDto);
+        Habit saved = habitRepository.save(habit);
+        return HabitMapper.toDto(saved);
     }
 
     @Override
-    public List<Habit> findByUserId(Long userId) {
-        return habitRepository.findByUserId(userId);
+    public List<HabitResponseDTO> findByUserId(Long userId) {
+        List<Habit> resultHabits = habitRepository.findByUserId(userId);
+        return HabitMapper.toDtoList(resultHabits);
     }
 }

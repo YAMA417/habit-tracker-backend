@@ -11,4 +11,5 @@ public class HabitResponseDTO {
     private String title;
     private String description;
     private List<String> scheduledDays;
+    private Long userId;
 }
